@@ -22,7 +22,6 @@ function Task() {
   const dispatch = useDispatch<AppDispatch>();
   const [newTask, setNewTask] = useState('');
 
-  console.log("tasks",tasks)
 
     useEffect(() => {
     const storedSession = localStorage.getItem('session'); // Or however you store session
