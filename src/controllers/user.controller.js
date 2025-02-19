@@ -1,53 +1,61 @@
 const User = require('../models/user.model');
 const bcrypt=require("bcrypt");
-const { uploadOnCloudinary } = require('../middlewares/cloudinary');
 
 
 
 exports.createUser = async (req, res) => {
     try {
-        const {email,username,firstName,lastName,password}=req.body;
-        
-        if (
-            [email,username,firstName,lastName,password].some((field) => field?.trim() === "")
-        ) {
-            return res.status(400).json({message:"All fields are Required!"})
+        const { email, firstName, lastName, password } = req.body;
+
+        // Check if any required field is missing
+        if (![email, password].every(field => field?.trim())) {
+            return res.status(400).json({ message: "email ,password  fields are required!" });
         }
-        const existedUser = await User.findOne({
-            $or: [{ username }, { email }]
-        })
-    
+
+        // Check if the email already exists
+        const existedUser = await User.findOne({ email });
         if (existedUser) {
-            return res.status(400).json({message:"Username or Email already exist!"})
+            return res.status(400).json({ message: "Email already exists!" });
         }
 
-        const newUser = await User.create({email,username,firstName,lastName,password});
+        // Hash the password before saving
 
+        // Create new user
+        const newUser = await User.create({ 
+            email, 
+            firstName, 
+            lastName, 
+            password 
+        });
+
+        // Generate auth token (if applicable)
         const token = await newUser.generateAuthToken();
-       return res.status(201).json(newUser);
+
+        return res.status(201).json({ user: newUser, token });
     } catch (err) {
-      return  res.status(500).json({ message: "Internal server Error!"});
+        console.error(err);
+        return res.status(500).json({ message: "Internal server error!" });
     }
 
 };
 exports.loginuser=( async (req, res) => {
     
     try {
-        const { email,username, password } = req.body;
-        if (!(username || email)) {
-            return res.status(400).json({message:"username or email is required!"})
+        const { email, password } = req.body;
+        if (!(email)) {
+            return res.status(400).json({message:"email is required!"})
         }
 
-        const user = await User.findOne({
-            $or: [{username}, {email}]
-        })
+        const user = await User.findOne({email:email})
 
         if (!user) {
             return res.status(404).json({message: "User does not exist!"})
         }
 
           // Compare the provided password with the hashed password stored in the database
-          const passwordMatch = await bcrypt.compare(password, user.password);
+         
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        console.log("Stored Hashed Password:", user.password);  // Debugging lo
 
           if (!passwordMatch) {
               return res.status(401).json({ message: "Incorrect password!" });

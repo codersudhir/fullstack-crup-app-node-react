@@ -3,12 +3,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: [true, 'Username is required'],
-        unique: true,
-        trim: true
-    },
     email: {
         type: String,
         required: [true, 'email is required'],
@@ -17,31 +11,14 @@ const userSchema = new mongoose.Schema({
     },
     firstName: {
         type: String,
-        required: [true, 'First name is required'],
-        trim: true
     },
     lastName: {
         type: String,
-        required: [true, 'Last name is required'],
-        trim: true
-    },
-    avatar:{
-        type:String,
-        default:"https://res.cloudinary.com/dhqpgwpgq/image/upload/v1710145179/default_avatar.jpg"
     },
     password: {
         type: String,
         required: [true, 'Password is required'],
         minlength: [6, 'Password must be at least 6 characters long']
-    },
-    verified:{
-        type:Boolean,
-        default:false
-    },
-    role: {
-        type: String,
-        enum: ['user', 'admin', 'moderator'],
-        default: 'user'
     },
     tokens:[{
         token: {
