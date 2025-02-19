@@ -4,6 +4,7 @@ import { AppDispatch, RootState } from '../redux/store';
 import { signUpUser, signInUser, signOut } from '../redux/authSlice';
 import toast from 'react-hot-toast';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 const Auth = () => {
   const dispatch = useDispatch<AppDispatch>();
 
@@ -13,37 +14,40 @@ const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
-
-  const handleAuth = (e: React.FormEvent) => {
+  const navigate =useNavigate()
+  const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
-    // dispatch(startLoading());
-
+    
     try {
       if (isSignUp) {
-        // Simulate successful signup
         const newUser = { email, password };
-        dispatch(signUpUser(newUser));
-        // toast.success('Registration successful! You can now sign in.');
+        await dispatch(signUpUser(newUser));
         setIsSignUp(false);
       } else {
-        // Simulate sign in
         if (!email || !password) {
           throw new Error('Invalid credentials');
         }
-        dispatch(signInUser({ email, password }));
-        // Extract token from response
-          const token = user?.tokens?.[0].token
-            // Store token in cookies securely (expires in 7 days)
-           Cookies.set('token', token, { expires: 7, secure: false, sameSite: 'Strict', path: '/' });
-      
-        // toast.success('Signed in successfully!');
-          window.location.href="/task"
+  
+        // Wait for sign-in response
+        const response = await dispatch(signInUser({ email, password }));
+  
+        // Extract user data from the response payload
+        const user = response?.payload;  // Ensure this matches your Redux setup
+        const token = user?.tokens?.[0]?.token;
+  
+        if (token) {
+          Cookies.set('token', token, { expires: 7, secure: true, sameSite: 'Strict', path: '/' });
+          navigate('/task'); // Redirect after successful login
+        } else {
+          throw new Error('Authentication failed. Please try again.');
+        }
       }
     } catch (error: any) {
-      console.log("err",error)
-      toast.error(error.message);
+      console.error("Error:", error);
+      toast.error(error.message || 'Something went wrong.');
     }
   };
+  
 
 
   return (

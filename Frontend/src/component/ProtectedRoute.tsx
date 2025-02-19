@@ -14,11 +14,15 @@ const Authenticate = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const token = Cookies.get("token");
 
+    console.log("token",token)
+
     if (!token) {
       navigate("/auth");
       return;
+    }else{
+      navigate("/task");
     }
-    navigate("/task")
+    
   }, [navigate]);
 
   return <>{children}</>;
