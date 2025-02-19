@@ -18,8 +18,6 @@ exports.createUser = async (req, res) => {
             return res.status(400).json({ message: "Email already exists!" });
         }
 
-        // Hash the password before saving
-
         // Create new user
         const newUser = await User.create({ 
             email, 
@@ -55,7 +53,6 @@ exports.loginuser=( async (req, res) => {
           // Compare the provided password with the hashed password stored in the database
          
         const passwordMatch = await bcrypt.compare(password, user.password);
-        console.log("Stored Hashed Password:", user.password);  // Debugging lo
 
           if (!passwordMatch) {
               return res.status(401).json({ message: "Incorrect password!" });
