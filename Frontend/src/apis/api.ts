@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const SigunUpUser = async ({email, password}) => {
+export const SigunUpUser = async ({email, password}:any) => {
   try {
     const config = {
       method: 'post',
@@ -21,7 +21,7 @@ export const SigunUpUser = async ({email, password}) => {
   }
 };
 
-export const SignInUser = async ({email, password}) => {
+export const SignInUser = async ({email, password}:any) => {
   try {
     const config = {
       method: 'post',
@@ -42,7 +42,7 @@ export const SignInUser = async ({email, password}) => {
 };
 
 
-export const Getalltasks = async (params) => {
+export const Getalltasks = async (params:any) => {
   try {
     const config = {
       method: 'get',
@@ -111,7 +111,7 @@ export const DeleteTask = async (taskId:string) => {  // taskId as a parameter
   }
 };
 
-export const updateTaskStatus = async (taskId, status) => {
+export const updateTaskStatus = async (taskId:any, status:string) => {
   try {
     const data = JSON.stringify({
       status: status,

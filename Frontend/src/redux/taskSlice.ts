@@ -3,7 +3,7 @@ import { createTask, DeleteTask, Getalltasks, updateTaskStatus } from '../apis/a
 import Task from '../component/Task';
 
 // Async thunks for API calls (replace with your actual API calls)
-export const getTasks = createAsyncThunk('tasks/getTasks', async (params) => {
+export const getTasks = createAsyncThunk('tasks/getTasks', async (params:any) => {
   const response = await Getalltasks(params) // Your API endpoint
 
   return response
@@ -47,19 +47,18 @@ const taskSlice = createSlice({
       })
       .addCase(getTasks.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error?.message 
       })
       .addCase(addTask.fulfilled, (state, action) => {
-        state.tasks.push(action.payload);
+        // state.tasks.push(action.payload);
       })
       .addCase(updateTask.fulfilled, (state, action) => {
         const updatedTask = action.payload;
-        const index = state.tasks.findIndex((task) => task.id === updatedTask.id);
+        const index = state.tasks.findIndex((task:any) => task.id === updatedTask.id);
        
       })
       .addCase(deleteTask.fulfilled, (state, action) => {
         const taskId = action.payload;
-        state.tasks = state.tasks.filter((task) => task.id !== taskId);
+        state.tasks = state.tasks.filter((task:any) => task.id !== taskId);
       });
 
   },

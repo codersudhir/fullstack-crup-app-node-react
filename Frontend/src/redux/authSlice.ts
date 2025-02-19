@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 export interface User {
   email: string;
   password: string;
+  tokens?:any
 }
 
 // Authentication state

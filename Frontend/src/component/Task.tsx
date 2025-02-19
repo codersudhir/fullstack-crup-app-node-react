@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Loader2, Plus, Trash2, CheckCircle2 } from 'lucide-react';
-import toast, { Toaster } from 'react-hot-toast';
-import { User } from './Auth'; // Assuming this is where your User type is defined
+import toast, { Toaster } from 'react-hot-toast';// Assuming this is where your User type is defined
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux/store'; // Import your Redux store
 import { getTasks, addTask, updateTask, deleteTask } from '../redux/taskSlice'; // Import your task actions
 import Pagination from './Pagination';
+import { User } from '../redux/authSlice';
 
 type Task = {
   title: string;
@@ -15,7 +15,7 @@ type Task = {
 };
 
 function Task() {
-  const [session, setSession] = useState<User | null>(true); // Make sure User type is correctly imported
+  const [session, setSession] = useState<any>(true); // Make sure User type is correctly imported
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const tasks = useSelector((state: RootState) => state.tasks);
@@ -91,7 +91,7 @@ function Task() {
     
   };
 
-  const handlePageChange = (page) => {
+  const handlePageChange = (page:any) => {
     // setCurrentPage(page);
     // Fetch data for the new page here...
     dispatch(getTasks({ page:page }))
@@ -146,7 +146,7 @@ function Task() {
           </form>
 
           <div className="space-y-3">
-            {tasks?.tasks?.map((task) => (
+            {tasks?.tasks?.map((task:any) => (
               <div
                 key={task.id}
                 className="flex items-center justify-between bg-gray-50 p-3 rounded-md"

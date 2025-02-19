@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Pagination = ({ totalPages, currentPage, onPageChange }) => {
+const Pagination = ({ totalPages, currentPage, onPageChange }:any) => {
     const maxButtonsToShow = 7;
 
     let startPage = Math.max(1, currentPage - Math.floor(maxButtonsToShow / 2));
@@ -10,11 +10,11 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
         startPage = Math.max(1, endPage - maxButtonsToShow + 1);
     }
 
-    const handlePageClick = (pageNumber) => {
+    const handlePageClick = (pageNumber:any) => {
         onPageChange(pageNumber); // Call the parent component's callback
     };
 
-    const renderPageButton = (pageNumber) => (
+    const renderPageButton = (pageNumber:any) => (
         <button
             key={pageNumber}
             onClick={() => handlePageClick(pageNumber)}
