@@ -144,16 +144,16 @@ function Task() {
             </div>
           </form>
 
-          <div className="p-4">
-      <div className="mb-4 flex gap-2">
+          <div className=" ">
+      <div className="mb-4 flex gap-2  ">
         <input
           type="text"
           placeholder="Search..."
-          className="border p-2 rounded lg:w-1/3"
+          className="border p-2 rounded w-1/2 lg:w-1/3"
          onChange={(e) => dispatch(getTasks({ title:e.target.value }))}
         />
         <select
-          className="border p-2 rounded lg:w-1/3"
+          className="border p-2 rounded w-1/2 lg:w-1/3"
            onChange={(e) => dispatch(getTasks({ status:e.target.value }))}
         >
           <option value="">All</option>
