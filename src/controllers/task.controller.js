@@ -47,14 +47,46 @@ exports.updateTaskStatus = async (req, res) => {
   };
 
 
-exports.getTasks = async (req, res) => {
-  try {
-    const tasks = await Task.find();
-   return res.status(200).json(tasks);
-  } catch (error) {
-   return res.status(500).json({ message: 'Error fetching tasks', error });
-  }
-};
+  exports.getTasks = async (req, res) => {
+    try {
+      const { page = 1, status, date, title } = req.query;
+      const limit = 10;
+      const skip = (page - 1) * limit;
+  
+      let filter = {};
+  
+      if (status) {
+        filter.status = status;
+      }
+  
+      if (date) {
+        filter.createdAt = {
+          $gte: new Date(date),
+          $lt: new Date(new Date(date).setDate(new Date(date).getDate() + 1))
+        };
+      }
+  
+      if (title) {
+        filter.title = { $regex: title, $options: 'i' }; // Case-insensitive search
+      }
+  
+      const tasks = await Task.find(filter)
+        .sort({ createdAt: -1 }) // Latest tasks first
+        .skip(skip)
+        .limit(limit);
+  
+      const totalTasks = await Task.countDocuments(filter);
+  
+      return res.status(200).json({
+        tasks,
+        currentPage: Number(page),
+        totalPages: Math.ceil(totalTasks / limit),
+        totalTasks
+      });
+    } catch (error) {
+      return res.status(500).json({ message: 'Error fetching tasks', error });
+    }
+  };
 
 exports.deleteTask = async (req, res) => {
     try {
