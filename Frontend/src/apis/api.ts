@@ -1,6 +1,9 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
+const token = Cookies.get("token");
 
+console.log("token",token)
 export const SigunUpUser = async ({email, password}:any) => {
   try {
     const config = {
@@ -49,7 +52,7 @@ export const Getalltasks = async (params:any) => {
       url: 'https://fullstack-crup-app-node-react-api.vercel.app/api/v1/tasks/getalltasks',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2I0ZTZjNWYwMzkzZmM3YjEwYzNhZmQiLCJpYXQiOjE3Mzk5MDg4MDV9.V2HyOq9wx6v8PC0sXze_AObYYcRbkgs_SbPUlZeFDqI`, // Replace with actual token securely
+        'Authorization': `Bearer ${token}`, // Replace with actual token securely
       },
       params: params, // Dynamically set parameters
     };
@@ -76,7 +79,7 @@ export const createTask = async (taskdetails:any, status = "pending") => {
       url: 'https://fullstack-crup-app-node-react-api.vercel.app/api/v1/tasks/taskcreate',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2I0ZTZjNWYwMzkzZmM3YjEwYzNhZmQiLCJpYXQiOjE3Mzk5MDg4MDV9.V2HyOq9wx6v8PC0sXze_AObYYcRbkgs_SbPUlZeFDqI`, // **SECURE THIS TOKEN!** Use environment variables.
+        'Authorization': `Bearer ${token}`, 
       },
       data,
     };
@@ -97,7 +100,7 @@ export const DeleteTask = async (taskId:string) => {  // taskId as a parameter
       url: `https://fullstack-crup-app-node-react-api.vercel.app/api/v1/tasks/deletetask/${taskId}`, // Use template literal for dynamic URL
       headers: {
         'Accept': 'application/json',
-        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2I0ZTZjNWYwMzkzZmM3YjEwYzNhZmQiLCJpYXQiOjE3Mzk5MDg4MDV9.V2HyOq9wx6v8PC0sXze_AObYYcRbkgs_SbPUlZeFDqI`, // **SECURE THIS TOKEN!** Use environment variables.
+        'Authorization': `Bearer ${token}`, 
         'Content-Type': 'application/json'
       }
     };
@@ -123,7 +126,7 @@ export const updateTaskStatus = async (taskId:any, status:string) => {
       url: `https://fullstack-crup-app-node-react-api.vercel.app/api/v1/tasks/taskupdate/${taskId}`,
       headers: {
         'Accept': 'application/json',
-        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2I0ZTZjNWYwMzkzZmM3YjEwYzNhZmQiLCJpYXQiOjE3Mzk5MDg4MDV9.V2HyOq9wx6v8PC0sXze_AObYYcRbkgs_SbPUlZeFDqI`, // **SECURE THIS TOKEN!** Use environment variables.
+        'Authorization': `Bearer ${token}`, 
         'Content-Type': 'application/json'
       },
       data: data,

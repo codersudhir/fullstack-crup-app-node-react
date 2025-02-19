@@ -133,7 +133,7 @@ function Task() {
                 value={newTask}
                 onChange={(e) => setNewTask(e.target.value)}
                 placeholder="Add a new task..."
-                className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3"
+                className="flex-1 rounded-md border  ring-blue-500 px-3"
               />
               <button
                 type="submit"
@@ -143,6 +143,26 @@ function Task() {
               </button>
             </div>
           </form>
+
+          <div className="p-4">
+      <div className="mb-4 flex gap-2">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="border p-2 rounded w-1/3"
+         onChange={(e) => dispatch(getTasks({ title:e.target.value }))}
+        />
+        <select
+          className="border p-2 rounded w-1/3"
+           onChange={(e) => dispatch(getTasks({ status:e.target.value }))}
+        >
+          <option value="">All</option>
+          <option value="completed">Completed</option>
+          <option value="pending">Pending</option>
+        </select>
+      </div>
+      
+    </div>
 
           <div className="space-y-3">
             {tasks?.tasks?.map((task:any) => (
