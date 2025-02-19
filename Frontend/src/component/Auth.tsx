@@ -63,7 +63,7 @@ const Auth = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full rounded-sm border-blue-500 focus:ring-blue-500 px-3 py-3"
+              className="mt-1 block w-full rounded-sm border ring-blue-500 px-3 py-3"
               required
             />
           </div>
@@ -73,7 +73,7 @@ const Auth = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full rounded-sm border border-blue-500 focus:ring-blue-500 px-3 py-3"
+              className="mt-1 block w-full rounded-sm border ring-blue-500 px-3 py-3"
               required
             />
           </div>
