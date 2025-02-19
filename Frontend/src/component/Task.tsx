@@ -149,11 +149,11 @@ function Task() {
         <input
           type="text"
           placeholder="Search..."
-          className="border p-2 rounded w-1/3"
+          className="border p-2 rounded lg:w-1/3"
          onChange={(e) => dispatch(getTasks({ title:e.target.value }))}
         />
         <select
-          className="border p-2 rounded w-1/3"
+          className="border p-2 rounded lg:w-1/3"
            onChange={(e) => dispatch(getTasks({ status:e.target.value }))}
         >
           <option value="">All</option>
